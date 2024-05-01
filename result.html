@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Songs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200vh;
+        }
+
+        /* Container for the background image */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind other content */
+            filter: blur(6px); 
+            background-image: url("{{ url_for('static', filename='playlistplots.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Style for album cover images */
+        .album-cover {
+            width: 50px; /* Adjust the width as needed */
+            height: 50px; /* Adjust the height as needed */
+            object-fit: cover;
+            border-radius: 50%; /* Make the image round */
+            display: block; /* Ensure proper alignment */
+            margin: auto; /* Center-align the album cover */
+        }
+        /* Style for table container */
+        .table-container {
+            width: 80%; /* Set the width of the table */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px; /* Add padding for spacing */
+            border-radius: 10px; /* Rounded corners for the container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect for the container */
+            text-align: center; /* Center-align table content */
+        }
+
+        /* Style for table */
+        table {
+            width: 100%; /* Set the width of the table to 100% */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* Gray border between rows */
+        }
+
+        th {
+            background-color: #e4c0a8; /* Light gray background for table headers */
+            text-align: center;
+        }
+
+        td.rank {
+            text-align: center; /* Center-align the content of these cells */
+        }
+
+        .song-name, .singer-name {
+            text-align: center;
+        }
+
+        h1{
+            color: #d3a27f;
+        }
+
+        h3{
+            color: #d3a27f;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="background-container"></div>
+    <div class="container">
+        <h1>Your Curated Playlist For {{book}}</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Ranking</th>
+                    <th>Album Covers</th>
+                    <th>Song Name</th>
+                    <th>Singer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                <tr>
+                    <td class="rank">{{ loop.index }}</td>
+                    <td>
+                        {% if song.album_cover_url %}
+                            <img src="{{ song.album_cover_url }}" alt="Album Cover" class="album-cover">
+                        {% else %}
+                            No Album Cover
+                        {% endif %}
+                    </td>
+                    <td class="song-name">{{ song['track_name'] }}</td>
+                    <td class="singer-name">{{ song['track_artist'] }}</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

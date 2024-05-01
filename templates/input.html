@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlaylistPlots</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the background image */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind other content */
+            filter: blur(6px); 
+            background-image: url("{{ url_for('static', filename='books.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container"></div>
+    <div class="container">
+        <h1>PlaylistPlots</h1>
+        <form id="SearchForm" onsubmit="redirectToResults(); return false;">
+            <label for="bookName">Enter a book name:</label>
+            <input type="text" id="bookName" name="bookName" size="30" required>
+            <br><br>
+            <label for="authorName">Enter the author's name:</label>
+            <input type="text" id="authorName" name="authorName" size="30" required>
+            <br><br>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <script>
+        function redirectToResults() {
+            // Get input values
+            var bookName = document.getElementById('bookName').value;
+            var authorName = document.getElementById('authorName').value;
+
+            // Redirect to result.html with query parameters
+            window.location.href = '/result?book=' + encodeURIComponent(bookName) + '&author=' + encodeURIComponent(authorName);
+        }
+    </script>
+</body>
+
+</html>
